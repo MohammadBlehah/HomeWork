@@ -1,0 +1,58 @@
+-- Q1
+DECLARE
+
+  TODAY DATE := SYSDATE;
+  TOMORROW TODAY%TYPE;
+  my_date DATE;
+  v_last_day DATE;
+
+BEGIN
+
+  DBMS_OUTPUT.PUT_LINE('Hello World');
+
+  TOMORROW := TODAY + 1;
+
+  DBMS_OUTPUT.PUT_LINE('TODAY: ' || TODAY);
+  DBMS_OUTPUT.PUT_LINE('TOMORROW: ' || TOMORROW);
+
+  my_date := TO_DATE(TODAY, 'MM/DD/YYYY');
+  DBMS_OUTPUT.PUT_LINE('Formatted Date: ' || TO_CHAR(my_date, 'Month DD, YYYY'));
+
+  v_last_day := LAST_DAY(TODAY);
+  DBMS_OUTPUT.PUT_LINE('Last Day of the Month: ' || v_last_day);
+
+  -- Adding 45 days to today's date
+  my_date := TODAY + 45;
+
+  -- Calculating and displaying the number of months between the two dates
+  DBMS_OUTPUT.PUT_LINE('Number of Months between TODAY and TODAY + 45 days: ' || MONTHS_BETWEEN(my_date, TODAY));
+  
+END;
+
+
+CREATE TABLE countries (
+  country_name VARCHAR2(50),
+  median_age NUMBER(6, 2)
+);
+
+-- Q2
+INSERT INTO countries (country_name, median_age) VALUES ('Japan', 35.5);
+INSERT INTO countries (country_name, median_age) VALUES ('USA', 38.2);
+INSERT INTO countries (country_name, median_age) VALUES ('Germany', 42.1);
+
+-- Q2 2
+
+DECLARE
+  -- Declarative Section
+  country_name countries.country_name%TYPE;
+  median_age countries.median_age%TYPE;
+BEGIN
+  -- Executable Section
+  SELECT country_name, median_age
+  INTO country_name, median_age
+  FROM countries
+  WHERE country_name = 'Japan';
+
+  DBMS_OUTPUT.PUT_LINE('The median age in ' || country_name || ' is ' || median_age || '.');
+END;
+
